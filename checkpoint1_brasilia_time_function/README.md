@@ -5,55 +5,42 @@ Esta é uma Google Cloud Function simples escrita em Python que retorna o horár
 ## Estrutura do Repositório
 
 ```text
-brasilia_time_function/
+checkpoint1_brasilia_time_function/
 ├── main.py           # Código fonte da função
 ├── requirements.txt  # Dependências do Python
+├── app_local.py      # Teste local com Flask
+├── serverless.yml    # Configuração do Serverless Framework
 └── README.md         # Instruções de uso
 ```
 
-## Como Rodar e Fazer o Deploy
+## Como Rodar Localmente (Flask)
 
-### 1. Instalar o Google Cloud SDK
-Siga as instruções oficiais para instalar o `gcloud` CLI em sua máquina:
-[Instalar Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
+Se desejar testar a lógica rapidamente sem o simulador do GCP:
+1. `pip install -r requirements.txt`
+2. `python app_local.py`
+3. Acesse `http://localhost:5000`
 
-### 2. Autenticar no GCP
-Abra o terminal e execute:
-```bash
-gcloud auth login
-```
+## Como Fazer o Deploy (GCP CLI)
 
-### 3. Configurar o Projeto (Opcional)
-Se você tiver múltiplos projetos, selecione o desejado:
-```bash
-gcloud config set project SEU_ID_DO_PROJETO
-```
-
-### 4. Fazer o Deploy da Função
-Navegue até a pasta do projeto e execute o comando abaixo:
+1. **Autenticar no GCP:** `gcloud auth login`
+2. **Deploy:**
 ```bash
 gcloud functions deploy get_brasilia_time \
+  --project project-62f09b8b-cbd8-428e-8f5 \
   --runtime python310 \
   --trigger-http \
   --allow-unauthenticated \
-  --region southamerica-east1
+  --region southamerica-east1 \
+  --entry-point get_brasilia_time
 ```
-*Nota: A região `southamerica-east1` corresponde a São Paulo.*
 
-### 5. Testar a Função
-Após o deploy, o comando acima exibirá uma URL (ex: `https://southamerica-east1-seu-projeto.cloudfunctions.net/get_brasilia_time`).
+## Como Fazer o Deploy (Serverless Framework)
 
-Você pode testar acessando a URL no seu navegador ou via terminal:
-```bash
-curl https://southamerica-east1-seu-projeto.cloudfunctions.net/get_brasilia_time
-```
+1. **Instalar Dependências:** `npm install`
+2. **Deploy:** `serverless deploy`
+
+## URL de Acesso Pública
+👉 [https://get-brasilia-time-dds6lra6za-rj.a.run.app](https://get-brasilia-time-dds6lra6za-rj.a.run.app)
 
 ## Exemplo de Resposta
-Ao acessar a função, você verá algo como:
 `Horário atual em Brasília: 09/08/2026 14:30:15`
-
-## Entrega Final
-Para completar o desafio, certifique-se de incluir:
-- O link para este repositório no GitHub.
-- A URL pública da função gerada pelo GCP.
-- Este README com as instruções.
