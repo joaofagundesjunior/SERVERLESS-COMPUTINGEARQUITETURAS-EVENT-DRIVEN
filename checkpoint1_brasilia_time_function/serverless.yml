@@ -1,0 +1,15 @@
+service: brasilia-time-function
+
+provider:
+  name: google
+  runtime: python310
+  region: southamerica-east1
+  project: meu-projeto-id-123
+  # O plugin 'serverless-google-cloudfunctions' é necessário para deploy no GCP via Serverless Framework
+  # credentials: ~/.gcp/keyfile.json
+
+functions:
+  get_brasilia_time:
+    handler: get_brasilia_time
+    events:
+      - http: path
