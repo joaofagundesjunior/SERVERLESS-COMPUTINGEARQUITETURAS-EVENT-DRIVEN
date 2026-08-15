@@ -39,8 +39,10 @@ gcloud functions deploy get_brasilia_time \
 1. **Instalar Dependências:** `npm install`
 2. **Deploy:** `serverless deploy`
 
-## URL de Acesso Pública
-👉 [https://get-brasilia-time-dds6lra6za-rj.a.run.app](https://get-brasilia-time-dds6lra6za-rj.a.run.app)
+
+
+## Validar a execução 
+gcloud pubsub topics publish checkpoint2-topic --message="Teste de evento Pub/Sub" && gcloud functions logs read checkpoint2_pubsub_event --limit=1
 
 ## Exemplo de Resposta
 `Horário atual em Brasília: 09/08/2026 14:30:15`
