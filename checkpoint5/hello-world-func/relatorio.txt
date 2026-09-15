@@ -1,0 +1,19 @@
+Relatório de Execução - Checkpoint 5
+Data: 15/09/2026
+
+Passos Executados:
+1. Análise da estrutura de arquivos do projeto.
+2. Identificação dos recursos necessários no GCP (Artifact Registry, Service Account, Secrets).
+3. Verificação da existência do repositório 'func-repo' em us-central1.
+4. Verificação da Service Account 'func-sa'.
+5. Verificação do Secret 'func-secret'.
+6. Execução do deploy via Cloud Build utilizando o comando 'gcloud builds submit'.
+7. Validação do status de sucesso da build (SUCCESS).
+8. Teste de fumaça (Smoke Test) via curl na URL da função.
+9. Geração de evidências e documentação (README.md e relatorio.txt).
+
+Evidência de Teste:
+Comando: curl -s https://us-central1-project-62f09b8b-cbd8-428e-8f5.cloudfunctions.net/hello-world-func
+Saída: Olá, Mundo! Deploy automático funcionando v2 🚀
+
+Conclusão: O projeto foi executado e implantado com sucesso seguindo as melhores práticas de automação.

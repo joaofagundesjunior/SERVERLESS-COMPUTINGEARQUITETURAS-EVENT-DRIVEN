@@ -1,0 +1,32 @@
+steps:
+  # 1. Test
+  - name: 'node:22'
+    entrypoint: 'npm'
+    args: ['install']
+  - name: 'node:22'
+    entrypoint: 'npm'
+    args: ['test']
+
+  # 2. Build and Push to Artifact Registry
+  - name: 'gcr.io/kaniko-project/executor:latest'
+    args:
+      - --destination=us-central1-docker.pkg.dev/$PROJECT_ID/func-repo/hello-world-func:$SHORT_SHA
+      - --destination=us-central1-docker.pkg.dev/$PROJECT_ID/func-repo/hello-world-func:latest
+      - --cache=true
+
+  # 3. Deploy to Cloud Functions
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'functions'
+      - 'deploy'
+      - 'hello-world-func'
+      - '--gen2'
+      - '--region=us-central1'
+      - '--runtime=nodejs22'
+      - '--source=.'
+      - '--entry-point=helloWorld'
+      - '--trigger-http'
+      - '--allow-unauthenticated'
+      - '--service-account=func-sa@$PROJECT_ID.iam.gserviceaccount.com'
+      - '--set-secrets=MY_SECRET=func-secret:latest'
